@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>COMP 426 a07</title>
+        <meta name="description" content="2048 created in JavaScript">
+        <meta name="author" content="tomn98">
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/system.css">
+    </head>
+
+    <body>
+        <div id="screen">
+
+            <div class="drop_menu TEMPLATE">
+                <p><span class="bold"><span class="underline">L</span>orem Dolor Ipsum</span></p>
+                <div class="menu_divider"></div>
+                <p><span class="underline">S</span>it Amet</p>
+                <p>Hello World</p>
+                <div class="menu_divider"></div>
+                <p class="disabled"><span class="bold underline">Bold</span> world</p>
+            </div>
+
+            <div id="game_window" class="window active" style="top: 100px; left: calc(50% - 156px);">
+                <div class="window_header">
+                    <h1 class="window_title bold">
+                        A07 2048 JavaScript
+                    </h1>
+                    <div class="window_controls">
+                        <button class="window_close"></button>
+                        <button class="window_max disabled"></button>
+                        <button class="window_min disabled"></button>
+                    </div>
+                </div>
+                <div class="window_menu">
+                    <div class="window_toolrack">
+                        <button class="window_menu_item">
+                            <div><span class="underline">G</span>ame</div>
+                            <div class="drop_menu">
+                                <p class="ask_reset"><span class="bold">Sta<span class="underline">r</span>t New Game</span></p>
+                                <div class="menu_divider"></div>
+                                <p class="load_win">Load <span class="underline">W</span>inning gameState</p>
+                                <p class="load_lose">Load <span class="underline">L</span>osing gameState</p>
+                                <div class="menu_divider"></div>
+                                <p class="step_back">Step <span class="underline">B</span>ack</p>
+                                <p class="step_forward">Step <span class="underline">F</span>orward</p>
+                            </div>
+                        </button>
+                        <button class="window_menu_item">
+                            <div><span class="underline">A</span>bout</div>
+                            <div class="drop_menu">
+                                <a href="https://comp426.com/assignments/a07" target="_blank"><p><span class="bold"><span class="underline">A</span>signment Page</span></p></a>
+                                <div class="menu_divider"></div>
+                                <a href="https://meyerweb.com/eric/tools/css/reset/" target="_blank"><p>Meyerweb CSS Reset</p></a>
+                                <div class="menu_divider"></div>
+                                <a href="https://jquery.com/" target="_blank"><p>jQuery</p></a>
+                                <a href="https://jqueryui.com/" target="_blank"><p>jQuery UI</p></a>
+                                <div class="menu_divider"></div>
+                                <a href="https://github.com/peterkhayes/solitaireVictory" target="_blank"><p>solitaireVictory.js</p></a>
+                                <a href="https://stackoverflow.com/questions/30683657/use-windows-95-font-on-webpage" target="_blank"><p>Windows 98 Font</p></a>
+                                <a href="https://win98icons.alexmeub.com/" target="_blank"><p>Windows 98 Icons</p></a>
+                                <a href="https://98.js.org/" target="_blank"><p>98.js.org</p></a>
+                            </div>
+                        </button>
+                        <button class="window_menu_item">
+                            <div><span class="underline">H</span>ow to Play</div>
+                            <div class="drop_menu">
+                                <a href="https://play2048.co/" target="_blank"><p>Based on the Game 2048</p></a>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="window_toolrack">
+                        <button id="game_back_button" class="window_tool_item fill disabled step_back"><div><span class="underline">B</span>ack</div></button>
+                        <button id="game_forward_button" class="window_tool_item fill disabled step_forward"><div><span class="underline">F</span>orward</div></button>
+                        <!-- <div class="window_toolrack_divider"></div>
+                        <button id="game_load_button" class="window_tool_item fill"><div><span class="underline">L</span>oad</div></button> -->
+                        <div class="window_toolrack_divider"></div>
+                        <button id="game_reset_button" class="window_tool_item fill ask_reset"><div><span class="underline">R</span>eset</div></button>
+                    </div>
+                </div>
+                <div class="game_container">
+                    <div class="game_score">
+                        <div class="score_wrapper"></div>
+                    </div>
+                    <div class="game_board"></div>
+                </div>
+            </div>
+
+            <div id="BACKDROP"></div>
+
+            <div id="win_alert" class="window alert" style="top: 140px; left: calc(50% - 110px); width: 300px;">
+                <div class="window_header">
+                    <h1 class="window_title bold">
+                    </h1>
+                    <div class="window_controls">
+                        <button class="window_close"></button>
+                    </div>
+                </div>
+                <div class="window_content with_icon">
+                    <div class="window_icon_32 icon_32_green"></div>
+                    <div class="window_text">
+                    </div>
+                    <div class="button_tray center_buttons">
+                        <button id="win_continue" class="window_button default highlighted continue"><span><span class="underline">C</span>ontinue</span></button>
+                        <button id="win_reset" class="window_button ask_reset"><span><span class="underline">N</span>ew Game</span></button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="lose_alert" class="window alert" style="top: 140px; left: calc(50% - 110px); width: 300px;">
+                <div class="window_header">
+                    <h1 class="window_title bold">
+                    </h1>
+                    <div class="window_controls">
+                        <button class="window_close"></button>
+                    </div>
+                </div>
+                <div class="window_content with_icon">
+                    <div class="window_icon_32 icon_32_green"></div>
+                    <div class="window_text">
+                    </div>
+                    <div class="button_tray center_buttons">
+                        <button id="lose_continue" class="window_button default highlighted continue"><span>Go <span class="underline">B</span>ack</span></button>
+                        <button id="lose_reset" class="window_button ask_reset"><span><span class="underline">N</span>ew Game</span></button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="reset_alert" class="window alert" style="top: 180px; left: calc(50% - 70px); width: 300px;">
+                <div class="window_header">
+                    <h1 class="window_title bold">
+
+                    </h1>
+                    <div class="window_controls">
+                        <button class="window_close"></button>
+                    </div>
+                </div>
+                <div class="window_content with_icon">
+                    <div class="window_icon_32 icon_32_green"></div>
+                    <div class="window_text">
+                        
+                    </div>
+                    <div class="button_tray center_buttons">
+                        <button id="reset_continue" class="window_button default highlighted continue"><span><span class="underline">C</span>ancel</span></button>
+                        <button id="reset_reset" class="window_button reset"><span>Yes</span></button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="engine/solitaireVictory.js"></script>
+    <script src="engine/game.js" type="module"></script>
+    <script src="engine/view.js" type="module"></script>
+    <script src="engine/main.js" type="module"></script>
+</html>
